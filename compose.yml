@@ -29,9 +29,7 @@ services:
     depends_on: ["db"]
     networks:
       backend:
-        ipv4_address: 172.20.0.10
-    ports:
-      - '5000:5000'
+        ipv4_address: 172.20.0.5
     environment:
       - DB_HOST=db
       - DB_USER=${MYSQL_USER}
@@ -40,13 +38,11 @@ services:
 
 
   db:
-    image: myqsql:8
+    image: mysql:8
     <<: [*deploy-dev, *env_file, *restart]
     networks:
       backend:
-        ipv4_address: 172.20.0.5
-    ports:  
-      - '3306:3306'
+        ipv4_address: 172.20.0.10
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -55,12 +51,7 @@ services:
       - MYSQL_ROOT_HOST="%" # it's very important!!!
           
      
-networks:
-  backend:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/24
+
 
 
 
